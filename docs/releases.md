@@ -1,4 +1,4 @@
-# DSH Workflow 0.1.0 · DSH 0.2.1-rc.2
+# DSH Workflow 0.1.1 · DSH 0.2.1-rc.2
 
 [中文](#zh) · [English](#en) · [安装 / Installation](#installation)
 
@@ -11,6 +11,10 @@
 - 支持直接脚本、保存名称与文件路径入口，一层嵌套、调用 journal 和成功前缀续跑。
 - 支持共享输出 token 目标、Git worktree 隔离与原生后台 Jobs。
 - 提供阶段、成员及执行状态入口，复用真实 REA 控件与原生工作流面板。
+
+### 问题修复
+
+- 补齐直接构建依赖，修复干净环境下无法重建 Workflow guest 的问题。
 
 ### 其他变更
 
@@ -28,6 +32,10 @@
 - Shared output token targets, Git worktree isolation and native background Jobs.
 - Phase, member and execution status entry points using REA components and native workflow panels.
 
+### Fixes
+
+- Declare the direct guest build dependency so clean installations can rebuild the plugin.
+
 ### Other changes
 
 - Package name `dsh-workflow-plus`, distributed only through this repository's pinned GitHub Releases.
@@ -40,9 +48,9 @@
 **宿主 / Host:** DSH `0.2.1-rc.2` · **Node.js:** `>=22.19`
 
 ```bash
-dsh plugin --profile web add "https://github.com/gulagala001/dsh-workflow/releases/download/v0.1.0-dsh.0.2.1-rc.2/dsh-workflow-plus-0.1.0-dsh.0.2.1-rc.2.tgz"
+dsh plugin --profile web add "https://github.com/gulagala001/dsh-workflow/releases/download/v0.1.1-dsh.0.2.1-rc.2/dsh-workflow-plus-0.1.1-dsh.0.2.1-rc.2.tgz"
 ```
 
 将 `web` 换成实际 profile，安装后重启。Replace `web` with your actual profile and restart it after installation.
 
-[固定安装包 / Pinned package](https://github.com/gulagala001/dsh-workflow/releases/download/v0.1.0-dsh.0.2.1-rc.2/dsh-workflow-plus-0.1.0-dsh.0.2.1-rc.2.tgz) · [SHA256SUMS](https://github.com/gulagala001/dsh-workflow/releases/download/v0.1.0-dsh.0.2.1-rc.2/SHA256SUMS) · [中文指南](../README.md#安装) · [English guide](../README_EN.md#install)
+[固定安装包 / Pinned package](https://github.com/gulagala001/dsh-workflow/releases/download/v0.1.1-dsh.0.2.1-rc.2/dsh-workflow-plus-0.1.1-dsh.0.2.1-rc.2.tgz) · [SHA256SUMS](https://github.com/gulagala001/dsh-workflow/releases/download/v0.1.1-dsh.0.2.1-rc.2/SHA256SUMS) · [中文指南](../README.md#安装) · [English guide](../README_EN.md#install)

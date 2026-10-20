@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1-dsh.0.2.1-rc.2
+
+- Declare the direct `@deepseek-ai/dsh-brand` guest build dependency for clean builds.
+- Supersedes 0.1.0; runtime behavior and DSH 0.2.1-rc.2 compatibility are unchanged.
+
+
 ## 0.1.0-dsh.0.2.1-rc.2 — 2026-10-20
 
 - 独立发布 OMD 增强 Workflow：保存脚本、一层嵌套、成功前缀续跑、共享输出目标、worktree、原生 Jobs 与工作流面板。

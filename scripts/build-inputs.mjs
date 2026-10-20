@@ -30,7 +30,7 @@ export async function outputPath(path) {
 export async function validateInputs() {
   const pkg = await readJson(join(root, 'package.json'));
   const requireBuild = createRequire(join(root, 'package.json'));
-  if (pkg.name !== 'dsh-workflow-plus' || pkg.version !== '0.1.0-dsh.0.2.1-rc.2' || pkg.engines?.node !== '>=22.19' || pkg.engines?.dsh !== host.version) throw Error('Package metadata must target dsh-workflow-plus 0.1.0 and exact DSH 0.2.1-rc.2');
+  if (pkg.name !== 'dsh-workflow-plus' || !/^\d+\.\d+\.\d+-dsh\./.test(pkg.version) || !pkg.version.endsWith(`-dsh.${host.version}`) || pkg.engines?.node !== '>=22.19' || pkg.engines?.dsh !== host.version) throw Error('Package metadata must target dsh-workflow-plus and exact DSH 0.2.1-rc.2');
   const [major, minor] = process.versions.node.split('.').map(Number);
   if (major < 22 || major === 22 && minor < 19) throw Error('Node >=22.19 is required');
   for (const [name, version] of Object.entries({ '@deepseek-ai/dsh': host.version, '@deepseek-ai/cordis': '4.0.5', '@deepseek-ai/schemastery': '3.18.5', typescript: '6.0.3' })) {

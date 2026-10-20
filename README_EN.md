@@ -11,7 +11,7 @@ This standalone module comes from OMD's Workflow implementation. It enhances the
 Requires **DSH 0.2.1-rc.2** and **Node.js ≥22.19**. Other host versions are outside this release's compatibility scope. Use your actual Web or desktop profile; this example uses `web`:
 
 ```bash
-dsh plugin --profile web add "https://github.com/gulagala001/dsh-workflow/releases/download/v0.1.0-dsh.0.2.1-rc.2/dsh-workflow-plus-0.1.0-dsh.0.2.1-rc.2.tgz"
+dsh plugin --profile web add "https://github.com/gulagala001/dsh-workflow/releases/download/v0.1.1-dsh.0.2.1-rc.2/dsh-workflow-plus-0.1.1-dsh.0.2.1-rc.2.tgz"
 ```
 
 Restart that profile after installation. The package is named `dsh-workflow-plus` and is distributed only through this repository's pinned GitHub Releases; it is not published to npm. The npm package `dsh-workflow` belongs to another author's project.
@@ -59,7 +59,7 @@ Resume reruns calls after the reusable prefix, so check existing artifacts and s
 Standalone budget state lives in `$DSH_HOME/dsh-workflow/sessions/`; scripts and run records live in `$DSH_HOME/dsh-workflow/workflows/`. `DSH_HOME` defaults to `~/.dsh`. Project scripts and worktrees retain the `.omd/workflows/` and `.omd/worktrees/` paths. Embedded OMD uses its existing storage. See [Usage](docs/workflow.md).
 
 ```bash
-pnpm install --frozen-lockfile
+pnpm install --frozen-lockfile --ignore-scripts --config.strict-dep-builds=false
 pnpm build
 ```
 

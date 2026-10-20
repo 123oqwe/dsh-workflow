@@ -11,7 +11,7 @@
 要求 **DSH 0.2.1-rc.2** 与 **Node.js ≥22.19**；其他宿主版本不在本版兼容范围内。Web 和桌面端使用各自的真实 profile，以下以 `web` 为例：
 
 ```bash
-dsh plugin --profile web add "https://github.com/gulagala001/dsh-workflow/releases/download/v0.1.0-dsh.0.2.1-rc.2/dsh-workflow-plus-0.1.0-dsh.0.2.1-rc.2.tgz"
+dsh plugin --profile web add "https://github.com/gulagala001/dsh-workflow/releases/download/v0.1.1-dsh.0.2.1-rc.2/dsh-workflow-plus-0.1.1-dsh.0.2.1-rc.2.tgz"
 ```
 
 安装后重启该 profile。包名为 `dsh-workflow-plus`，只通过本仓库的固定 GitHub Release 分发，未发布到 npm。npm 上的 `dsh-workflow` 属于其他作者的项目。
@@ -59,7 +59,7 @@ return await parallel([
 独立预算状态保存在 `$DSH_HOME/dsh-workflow/sessions/`，运行脚本与记录位于 `$DSH_HOME/dsh-workflow/workflows/`；默认 `DSH_HOME` 为 `~/.dsh`。项目命名脚本和隔离工作区保留 `.omd/workflows/`、`.omd/worktrees/` 路径。OMD 内置模式沿用其原有存储。详见[使用说明](docs/workflow.md)。
 
 ```bash
-pnpm install --frozen-lockfile
+pnpm install --frozen-lockfile --ignore-scripts --config.strict-dep-builds=false
 pnpm build
 ```
 
