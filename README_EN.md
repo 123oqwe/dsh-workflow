@@ -4,7 +4,7 @@
 
 Saved, nested and resumable JavaScript workflows for **DeepSeek Harness 0.2.1-rc.2**, with native subagents, background Jobs, workflow panels, shared output token targets and Git worktree isolation.
 
-This standalone module comes from OMD's Workflow implementation. It enhances the current profile's native `workflow` capability while using the host's models, sessions and permissions. It does not include Ultra, the OMD persona or Computer Use.
+Use the `workflow` tool to coordinate subagents around task dependencies, run independent work in parallel, save scripts and resume interrupted runs. Models, sessions and permissions use DSH's native capabilities.
 
 ## Install
 
@@ -15,8 +15,6 @@ dsh plugin --profile web add "https://github.com/gulagala001/dsh-workflow/releas
 ```
 
 Restart that profile after installation. The package is named `dsh-workflow-plus` and is distributed only through this repository's pinned GitHub Releases; it is not published to npm. The npm package `dsh-workflow` belongs to another author's project.
-
-**Users of previously released OMD versions should keep using their bundled Workflow.** Co-installation with those older releases is not supported by this release. New OMD builds using this same module can share its runtime components. Existing sessions need no migration or deletion.
 
 To update, use the pinned package URL for the target release. To remove, run `dsh plugin --profile web remove dsh-workflow-plus` and restart that profile. Removal does not proactively delete saved scripts, run records or worktrees.
 
@@ -56,7 +54,7 @@ Resume reruns calls after the reusable prefix, so check existing artifacts and s
 
 ## Data and development
 
-Standalone budget state lives in `$DSH_HOME/dsh-workflow/sessions/`; scripts and run records live in `$DSH_HOME/dsh-workflow/workflows/`. `DSH_HOME` defaults to `~/.dsh`. Project scripts and worktrees retain the `.omd/workflows/` and `.omd/worktrees/` paths. Embedded OMD uses its existing storage. See [Usage](docs/workflow.md).
+Standalone budget state lives in `$DSH_HOME/dsh-workflow/sessions/`; scripts and run records live in `$DSH_HOME/dsh-workflow/workflows/`. `DSH_HOME` defaults to `~/.dsh`. Project scripts and worktrees retain the `.omd/workflows/` and `.omd/worktrees/` paths. See [Usage](docs/workflow.md).
 
 ```bash
 pnpm install --frozen-lockfile --ignore-scripts --config.strict-dep-builds=false

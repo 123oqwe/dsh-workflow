@@ -4,7 +4,7 @@
 
 为 **DeepSeek Harness 0.2.1-rc.2** 提供可保存、嵌套和续跑的 JavaScript 工作流，结合原生子代理、后台 Jobs、工作流面板、共享输出 token 目标与 Git worktree 隔离。
 
-这是从 OMD 拆出的独立 Workflow 模块。安装后增强当前 profile 的原生 `workflow` 能力，继续使用宿主已有模型、会话和权限。独立插件不包含 Ultra、OMD 人格或 Computer Use。
+安装后即可通过 `workflow` 工具编排任务：按依赖组织子代理、并行执行独立工作、保存脚本并恢复中断的运行。模型、会话和权限沿用 DSH 的原生能力。
 
 ## 安装
 
@@ -15,8 +15,6 @@ dsh plugin --profile web add "https://github.com/gulagala001/dsh-workflow/releas
 ```
 
 安装后重启该 profile。包名为 `dsh-workflow-plus`，只通过本仓库的固定 GitHub Release 分发，未发布到 npm。npm 上的 `dsh-workflow` 属于其他作者的项目。
-
-**已安装旧版 OMD 的用户继续使用 OMD 内置 Workflow。** 本版不承诺与已经发行的旧 OMD 共装；采用同一模块的新版 OMD 可共享运行组件。无需迁移或删除现有会话。
 
 更新时使用目标版本的固定包地址。卸载使用 `dsh plugin --profile web remove dsh-workflow-plus`，然后重启该 profile；插件不会主动删除保存的脚本、运行记录或 worktree。
 
@@ -56,7 +54,7 @@ return await parallel([
 
 ## 数据与开发
 
-独立预算状态保存在 `$DSH_HOME/dsh-workflow/sessions/`，运行脚本与记录位于 `$DSH_HOME/dsh-workflow/workflows/`；默认 `DSH_HOME` 为 `~/.dsh`。项目命名脚本和隔离工作区保留 `.omd/workflows/`、`.omd/worktrees/` 路径。OMD 内置模式沿用其原有存储。详见[使用说明](docs/workflow.md)。
+独立预算状态保存在 `$DSH_HOME/dsh-workflow/sessions/`，运行脚本与记录位于 `$DSH_HOME/dsh-workflow/workflows/`；默认 `DSH_HOME` 为 `~/.dsh`。项目命名脚本和隔离工作区保留 `.omd/workflows/`、`.omd/worktrees/` 路径。详见[使用说明](docs/workflow.md)。
 
 ```bash
 pnpm install --frozen-lockfile --ignore-scripts --config.strict-dep-builds=false

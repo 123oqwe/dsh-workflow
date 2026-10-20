@@ -1,6 +1,6 @@
 # Third-party notices
 
-DSH Workflow is licensed under [MIT](LICENSE). Original and OMD-owned contributions in this distribution are Copyright (c) 2026 gulagala001.
+DSH Workflow is licensed under [MIT](LICENSE). Project contributions in this distribution are Copyright (c) 2026 gulagala001.
 
 ## DeepSeek Harness
 

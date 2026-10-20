@@ -58,9 +58,9 @@ A trailing `+500k` means 500,000 output tokens; `+1m` means 1,000,000. Scripts r
 
 ## 数据与权限 / Data and permissions
 
-独立状态目录为 `$DSH_HOME/dsh-workflow/`（默认 `~/.dsh/dsh-workflow/`）：`sessions/` 保存预算，`workflows/` 保存工作流脚本和执行记录。OMD 内置方式沿其原有 `trisoul-x` 存储。原生会话与 Jobs 由宿主保存；本插件不新增独立账号或遥测端点。
+独立状态目录为 `$DSH_HOME/dsh-workflow/`（默认 `~/.dsh/dsh-workflow/`）：`sessions/` 保存预算，`workflows/` 保存工作流脚本和执行记录。原生会话与 Jobs 由宿主保存；本插件不新增独立账号或遥测端点。
 
-Standalone state lives in `$DSH_HOME/dsh-workflow/` (default `~/.dsh/dsh-workflow/`): `sessions/` stores budgets and `workflows/` stores scripts and run records. Embedded OMD retains its existing `trisoul-x` storage. Native sessions and Jobs remain host-owned; this plugin adds no separate account or telemetry endpoint.
+Standalone state lives in `$DSH_HOME/dsh-workflow/` (default `~/.dsh/dsh-workflow/`): `sessions/` stores budgets and `workflows/` stores scripts and run records. Native sessions and Jobs remain host-owned; this plugin adds no separate account or telemetry endpoint.
 
 工作流可以派发会读写文件、运行命令或访问网络的子代理；实际访问由用户授权、宿主权限与所用工具决定。工作流 VM 本身不构成额外安全边界。
 
