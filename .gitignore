@@ -1,0 +1,16 @@
+node_modules
+.local
+*.tgz
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+AGENTS.md
+CLAUDE.md
+AI_README.md
+PLAN.md
+*HANDOFF*.md
+test-results/
+playwright-report/
+coverage/
