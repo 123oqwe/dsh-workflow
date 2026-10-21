@@ -38,7 +38,7 @@ test('captured embedded budgets account for children started after the embedding
   const embedding = await mount({
     name: 'budget-test-embedding',
     apply(scope) {
-      scope.provide('trisoulX', { workflowBudget: embeddedBudget, store });
+      scope.provide('omd', { workflowBudget: embeddedBudget, store });
       scope.on('agent/created', ({ agent }) => embeddedBudget.attach(agent.session), { global: true });
       scope.on('session/event', (session, event) => embeddedBudget.observe(session, event), { global: true });
     },
@@ -68,7 +68,7 @@ test('captured embedded budgets account for children started after the embedding
   assert.deepEqual(captured.snapshot(), { total: 10, spent: 3, unmetered: 0 });
 
   await embedding.dispose();
-  assert.equal(ctx.get('trisoulX'), undefined);
+  assert.equal(ctx.get('omd'), undefined);
   assert.equal(runtime.support(parent).store.dir, runtime.store.dir);
   const lateChild = startChild('late');
   assert.deepEqual(embeddedBudget.owner(lateChild), captured.owner);
