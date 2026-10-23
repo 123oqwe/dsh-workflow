@@ -36,6 +36,10 @@ Pass `resumeFromRunId` within the same session to reuse the longest unchanged su
 
 Check artifacts and side effects before resuming. Active runs and runs already locked by another resume cannot be replayed concurrently. Cancellation waits for pending starts and cleanup. After a crash, only durable successful results are reusable; cancellation never restarts work automatically.
 
+子任务释放、执行日志或 worktree 回执保存失败会使工作流报错并停止新派发，已开始的任务仍会等待收尾。恢复锁只在无法确认原生子任务已经停止时保留到进程退出；仅保存失败且任务已停止时，修复存储问题并检查副作用后可手动续跑，未保存的结果不会成为成功缓存。
+
+Child disposal, journal writes or worktree receipt failures fail the workflow and stop new dispatches while admitted work is joined. A resume lock remains until process exit only when native child shutdown cannot be confirmed. If children have stopped and only persistence failed, fix storage and inspect side effects before resuming manually; unsaved results are never treated as successful cache entries.
+
 ## 隔离 / Worktree isolation
 
 `agent(prompt, { isolation: 'worktree' })` 从当前仓库 HEAD 创建 `.omd/worktrees/` 下的独立 Git worktree。未提交改动不复制；无变化目录自动清理，有修改、未跟踪文件、忽略文件或新提交的目录保留，并在 `worktrees` 中返回。检查和合并由用户或后续授权操作负责。

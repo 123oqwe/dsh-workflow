@@ -1,3 +1,4 @@
+import { execFileSync } from 'node:child_process';
 import { copyFile, lstat, mkdir, readFile, readdir, realpath, rename, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { root, sha256, validateInputs, readJson } from './build-inputs.mjs';
@@ -20,14 +21,16 @@ async function collect(directory, prefix, accept) {
   }
 }
 await collect(join(root, 'src'), 'src/', path => /\.(?:mjs|jsx|css|json)$/.test(path));
-await collect(join(root, 'lib'), 'lib/', path => path !== 'lib/client.js' && /\.(?:mjs|js|json)$/.test(path));
+await collect(join(root, 'lib'), 'lib/', path => /\.(?:mjs|js|json)$/.test(path));
+await collect(join(root, 'docs'), 'docs/', () => true);
+await collect(join(root, 'scripts'), 'scripts/', path => /\.(?:mjs|json)$/.test(path));
 await collect(join(root, 'vendor'), 'vendor/', path => path === 'vendor/dsh.json' || path.startsWith('vendor/dsh/'));
-for (const name of ['package.json', 'cordis.patch.yml', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'docs/licenses/acorn.txt']) {
+for (const name of ['package.json', 'cordis.patch.yml', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'README.md', 'README_EN.md', 'CHANGELOG.md']) {
   const path = join(root, name);
   if (!(await lstat(path)).isFile() || await realpath(path) !== path) throw Error(`Invalid package metadata: ${name}`);
   files.set(name, path);
 }
-for (const name of ['src/index.mjs', 'src/client/index.jsx', 'lib/client.factory.mjs', 'lib/host/dependencies.json', 'lib/host/workflow-ptc.factory.mjs', 'lib/host/tool-workflow.factory.mjs', 'lib/host/workflow-spawn.factory.mjs']) if (!files.has(name)) throw Error(`Build before syncing; missing ${name}`);
+for (const name of ['src/index.mjs', 'src/client/index.jsx', 'lib/client.js', 'lib/client.factory.mjs', 'lib/host/dependencies.json', 'lib/host/workflow-ptc.factory.mjs', 'lib/host/tool-workflow.factory.mjs', 'lib/host/workflow-spawn.factory.mjs']) if (!files.has(name)) throw Error(`Build before syncing; missing ${name}`);
 let previous;
 try {
   if (!(await lstat(manifestPath)).isFile() || await realpath(manifestPath) !== manifestPath) throw Error('Refusing non-owned Workflow manifest');
@@ -69,5 +72,6 @@ try {
   try { await rename(staging, destination); await rename(pendingManifest, manifestPath); }
   catch (error) { await rm(destination, { recursive: true, force: true }); if (moved) await rename(backup, destination); await rm(pendingManifest, { force: true }); throw error; }
   if (moved) await rm(backup, { recursive: true });
-  console.log(`Synced ${files.size} runtime files to ${destination}; SHA256 inventory: ${manifestPath}`);
+  execFileSync(process.execPath, [join(target, 'scripts/build-credits.mjs'), '--write'], { cwd: target, stdio: 'inherit' });
+  console.log(`Synced ${files.size} distribution files to ${destination}; SHA256 inventory: ${manifestPath}`);
 } finally { await rm(staging, { recursive: true, force: true }); }
