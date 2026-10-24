@@ -1,3 +1,9 @@
+# DSH Workflow 0.1.5 · DSH 0.2.1-rc.2
+
+- Ship a Standard preset replacement so the plugin workflow tool is visible after install, without manually editing `preset-standard`.
+- Add `/workflow list`, `/workflow show <runId>` and `/workflow resume <runId>`.
+- Report cross-session resume sources with a clear scope error instead of ENOENT.
+
 # DSH Workflow 0.1.4 · DSH 0.2.1-rc.2
 
 [中文](#zh-014) | [English](#en-014)
