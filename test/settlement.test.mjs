@@ -4,7 +4,7 @@ import * as fs from 'node:fs/promises';
 import { createRequire, isBuiltin } from 'node:module';
 import { pathToFileURL } from 'node:url';
 import { randomUUID } from 'node:crypto';
-import { join, resolve, relative, isAbsolute, sep } from 'node:path';
+import { join, resolve, relative, isAbsolute, sep, dirname, basename } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { createModule as createSpawnModule } from '../lib/host/workflow-spawn.factory.mjs';
@@ -234,7 +234,14 @@ for (const nativeFailure of [false, true]) test(`real worktree receipt failure p
     },
     sandboxPolicy: { resolve: () => ({ mode: 'danger-full-access', workspaceRoot: directory }) },
     fs: {
-      resolve: async (path, options) => resolve(options?.cwd ?? directory, path),
+      resolve: async (path, options) => {
+        const absolute = resolve(options?.cwd ?? directory, path)
+        try { return await fs.realpath(absolute) }
+        catch {
+          try { return join(await fs.realpath(dirname(absolute)), basename(absolute)) }
+          catch { return absolute }
+        }
+      },
       processPathFromHostPath: path => path, processPath: path => path,
       contains(root, path) { const part = relative(root, path); return part !== '..' && !part.startsWith('..' + sep) && !isAbsolute(part); },
     },
