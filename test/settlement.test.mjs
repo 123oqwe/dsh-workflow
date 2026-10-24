@@ -257,3 +257,17 @@ for (const nativeFailure of [false, true]) test(`real worktree receipt failure p
   if (nativeFailure) await fs.access(artifacts[0].path);
   else await assert.rejects(fs.access(artifacts[0].path), { code: 'ENOENT' });
 });
+
+test('resume source from another session fails with a clear scope error', async t => {
+  const f = await fixture(t)
+  const otherRun = randomUUID()
+  const other = await f.host.WorkflowJournal.create(f.root, 'other-session', otherRun, { script: '', meta: {} })
+  await other.close({ outcome: 'completed' })
+  await assert.rejects(
+    f.host.WorkflowJournal.create(f.root, 'parent', randomUUID(), { script: '', meta: {}, resumeFromRunId: otherRun }),
+    error => {
+      assert.match(error.message, /another session|not part of this session/i)
+      return true
+    },
+  )
+})
