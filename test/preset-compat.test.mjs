@@ -32,3 +32,16 @@ test('the bundle still inserts its own runtime, spawn, engine and tool', () => {
   assert.match(patch, /name: dsh-workflow-plus\/engine/)
   assert.match(patch, /name: dsh-workflow-plus\/tool/)
 })
+
+test('the bundle ships a PTC preset without the native workflow engine or tool', () => {
+  const preset = block('preset-ptc')
+  assert.ok(preset, 'cordis.patch.yml must replace preset-ptc')
+  assert.match(preset, /config:\n\s+id: ptc/)
+  for (const row of ['workflow-worker-thread', 'workflow-filesystem', 'workflow-ptc', 'tool-workflow']) {
+    assert.doesNotMatch(preset, new RegExp(`- id: ${row}\\b`), `preset-ptc must not mount ${row}`)
+  }
+  for (const row of ['tool-bash', 'tool-fs', 'tool-subagent', 'tool-ask-user', 'tool-todo']) {
+    assert.match(preset, new RegExp(`- id: ${row}\\b`), `preset-ptc must keep ${row}`)
+  }
+  assert.doesNotMatch(preset, /workflowEngine: true/, 'the PTC delegation realm must not hide the plugin workflow engine')
+})
