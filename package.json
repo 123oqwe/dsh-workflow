@@ -1,6 +1,6 @@
 {
   "name": "dsh-workflow-plus",
-  "version": "0.1.4-dsh.0.2.1-rc.2",
+  "version": "0.1.5-dsh.0.2.1-rc.2",
   "description": "Resumable JavaScript workflows, native subagents, token budgets and worktree isolation for DeepSeek Harness.",
   "type": "module",
   "license": "MIT",
@@ -11,15 +11,16 @@
     "./tool": "./src/tool.mjs",
     "./spawn": "./src/spawn.mjs",
     "./client": "./lib/client.js",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./commands": "./src/commands.mjs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gulagala001/dsh-workflow.git"
+    "url": "git+https://github.com/123oqwe/dsh-workflow.git"
   },
-  "homepage": "https://github.com/gulagala001/dsh-workflow#readme",
+  "homepage": "https://github.com/123oqwe/dsh-workflow#readme",
   "bugs": {
-    "url": "https://github.com/gulagala001/dsh-workflow/issues"
+    "url": "https://github.com/123oqwe/dsh-workflow/issues"
   },
   "keywords": [
     "dsh",
