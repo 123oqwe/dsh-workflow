@@ -79,7 +79,17 @@ export class WorkflowJournal {
         if (input.resumeFromRunId === id) throw new Error('A workflow cannot resume itself')
         const source = join(canonical, runId(input.resumeFromRunId))
         // Do not create a phantom source directory when a run belongs to another session.
-        await readFile(join(source, 'run.json'), 'utf8')
+        // A raw ENOENT here is indistinguishable from a filesystem fault; name the
+        // scope mismatch instead so the caller knows the run id is from elsewhere.
+        let sourceRun: { sessionId?: unknown }
+        try { sourceRun = JSON.parse(await readFile(join(source, 'run.json'), 'utf8')) }
+        catch (error) {
+          if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+            throw new Error(`Resume source ${input.resumeFromRunId} is not part of this session`)
+          }
+          throw error
+        }
+        if (sourceRun.sessionId !== sessionId) throw new Error(`Resume source ${input.resumeFromRunId} is not part of this session`)
         sourceLease = await SessionWriteLease.acquire(source, sessionId as SessionId)
         cached = readJournal(await readFile(join(source, 'journal.jsonl'), 'utf8'))
       }
