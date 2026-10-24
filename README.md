@@ -7,13 +7,13 @@
 <p align="center"><strong>简体中文</strong> · <a href="README_EN.md">English</a></p>
 
 <p align="center">
-  <a href="https://github.com/gulagala001/dsh-workflow/releases/tag/v0.1.4-dsh.0.2.1-rc.2"><img alt="0.1.4" src="https://img.shields.io/badge/release-0.1.4-0969da?style=flat-square"></a>
-  <a href="https://github.com/gulagala001/dsh-workflow/releases"><img alt="GitHub 累计下载量" src="https://img.shields.io/github/downloads/gulagala001/dsh-workflow/total?style=flat-square&amp;label=GitHub%20downloads&amp;color=0969da"></a>
+  <a href="https://github.com/123oqwe/dsh-workflow/releases/tag/v0.1.5-dsh.0.2.1-rc.2"><img alt="0.1.5" src="https://img.shields.io/badge/release-0.1.5-0969da?style=flat-square"></a>
+  <a href="https://github.com/123oqwe/dsh-workflow/releases"><img alt="GitHub 累计下载量" src="https://img.shields.io/github/downloads/123oqwe/dsh-workflow/total?style=flat-square&amp;label=GitHub%20downloads&amp;color=0969da"></a>
   <a href="#readme-install"><img alt="DSH 0.2.1-rc.2" src="https://img.shields.io/badge/DSH-0.2.1--rc.2-0969da?style=flat-square"></a>
-  <a href="https://github.com/gulagala001/dsh-workflow/stargazers"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/gulagala001/dsh-workflow?style=flat-square&amp;color=0969da"></a>
+  <a href="https://github.com/123oqwe/dsh-workflow/stargazers"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/123oqwe/dsh-workflow?style=flat-square&amp;color=0969da"></a>
 </p>
 
-<p align="center"><a href="#readme-install"><strong>开始使用</strong></a> · <a href="docs/workflow.md">完整文档</a> · <a href="https://github.com/gulagala001/dsh-workflow/issues">反馈</a></p>
+<p align="center"><a href="#readme-install"><strong>开始使用</strong></a> · <a href="docs/workflow.md">完整文档</a> · <a href="https://github.com/123oqwe/dsh-workflow/issues">反馈</a></p>
 
 <a name="readme-install"></a>
 
@@ -28,10 +28,10 @@
 打开实际使用的 DSH 实例，在 **插件 → ＋ 添加插件** 中粘贴：
 
 ```text
-https://github.com/gulagala001/dsh-workflow/releases/download/v0.1.4-dsh.0.2.1-rc.2/dsh-workflow-plus-0.1.4-dsh.0.2.1-rc.2.tgz
+https://github.com/123oqwe/dsh-workflow/releases/download/v0.1.5-dsh.0.2.1-rc.2/dsh-workflow-plus-0.1.5-dsh.0.2.1-rc.2.tgz
 ```
 
-等当前任务结束后，按宿主提示启用或完整重启该实例，沿用原 profile 与数据。其他宿主、升级和卸载见[安装指南](docs/install.md) · [SHA256SUMS](https://github.com/gulagala001/dsh-workflow/releases/download/v0.1.4-dsh.0.2.1-rc.2/SHA256SUMS).
+等当前任务结束后，按宿主提示启用或完整重启该实例，沿用原 profile 与数据。其他宿主、升级和卸载见[安装指南](docs/install.md) · [SHA256SUMS](https://github.com/123oqwe/dsh-workflow/releases/download/v0.1.5-dsh.0.2.1-rc.2/SHA256SUMS).
 
 ### 2. 先试这一件事
 
@@ -110,11 +110,11 @@ pnpm build
 | --- | --- |
 | 安装、升级、卸载 | [安装指南](docs/install.md) |
 | 了解使用方法与边界 | [使用文档](docs/workflow.md) |
-| 查看版本变化 | [Releases](https://github.com/gulagala001/dsh-workflow/releases) |
-| 反馈问题 | [Issues](https://github.com/gulagala001/dsh-workflow/issues) |
+| 查看版本变化 | [Releases](https://github.com/123oqwe/dsh-workflow/releases) |
+| 反馈问题 | [Issues](https://github.com/123oqwe/dsh-workflow/issues) |
 
 反馈时请提供完整 DSH／插件版本、实际入口、最小复现步骤，以及预期和实际表现；日志与截图先移除私人数据。
 
-<p align="center"><a href="#readme-top">返回顶部</a> · <a href="https://github.com/gulagala001/dsh-workflow/releases">版本与下载</a> · <a href="https://github.com/gulagala001/dsh-workflow/issues">反馈</a></p>
+<p align="center"><a href="#readme-top">返回顶部</a> · <a href="https://github.com/123oqwe/dsh-workflow/releases">版本与下载</a> · <a href="https://github.com/123oqwe/dsh-workflow/issues">反馈</a></p>
 
 [文档结构与贡献](docs/documentation.md)

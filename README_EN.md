@@ -7,13 +7,13 @@
 <p align="center"><a href="README.md">简体中文</a> · <strong>English</strong></p>
 
 <p align="center">
-  <a href="https://github.com/gulagala001/dsh-workflow/releases/tag/v0.1.4-dsh.0.2.1-rc.2"><img alt="0.1.4" src="https://img.shields.io/badge/release-0.1.4-0969da?style=flat-square"></a>
-  <a href="https://github.com/gulagala001/dsh-workflow/releases"><img alt="GitHub total downloads" src="https://img.shields.io/github/downloads/gulagala001/dsh-workflow/total?style=flat-square&amp;label=GitHub%20downloads&amp;color=0969da"></a>
+  <a href="https://github.com/123oqwe/dsh-workflow/releases/tag/v0.1.5-dsh.0.2.1-rc.2"><img alt="0.1.5" src="https://img.shields.io/badge/release-0.1.5-0969da?style=flat-square"></a>
+  <a href="https://github.com/123oqwe/dsh-workflow/releases"><img alt="GitHub total downloads" src="https://img.shields.io/github/downloads/123oqwe/dsh-workflow/total?style=flat-square&amp;label=GitHub%20downloads&amp;color=0969da"></a>
   <a href="#readme-install"><img alt="DSH 0.2.1-rc.2" src="https://img.shields.io/badge/DSH-0.2.1--rc.2-0969da?style=flat-square"></a>
-  <a href="https://github.com/gulagala001/dsh-workflow/stargazers"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/gulagala001/dsh-workflow?style=flat-square&amp;color=0969da"></a>
+  <a href="https://github.com/123oqwe/dsh-workflow/stargazers"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/123oqwe/dsh-workflow?style=flat-square&amp;color=0969da"></a>
 </p>
 
-<p align="center"><a href="#readme-install"><strong>Get started</strong></a> · <a href="docs/workflow.md">Docs</a> · <a href="https://github.com/gulagala001/dsh-workflow/issues">Report an issue</a></p>
+<p align="center"><a href="#readme-install"><strong>Get started</strong></a> · <a href="docs/workflow.md">Docs</a> · <a href="https://github.com/123oqwe/dsh-workflow/issues">Report an issue</a></p>
 
 <a name="readme-install"></a>
 
@@ -28,10 +28,10 @@ Subagents use host models and permissions and incur normal model usage. Resume r
 Open **Plugins → Add plugin** in the DSH instance you use, then paste:
 
 ```text
-https://github.com/gulagala001/dsh-workflow/releases/download/v0.1.4-dsh.0.2.1-rc.2/dsh-workflow-plus-0.1.4-dsh.0.2.1-rc.2.tgz
+https://github.com/123oqwe/dsh-workflow/releases/download/v0.1.5-dsh.0.2.1-rc.2/dsh-workflow-plus-0.1.5-dsh.0.2.1-rc.2.tgz
 ```
 
-Wait for active tasks to finish, then follow the host’s activation/restart prompt. Keep your existing profile and data. See the [installation guide](docs/install_EN.md) · [SHA256SUMS](https://github.com/gulagala001/dsh-workflow/releases/download/v0.1.4-dsh.0.2.1-rc.2/SHA256SUMS).
+Wait for active tasks to finish, then follow the host’s activation/restart prompt. Keep your existing profile and data. See the [installation guide](docs/install_EN.md) · [SHA256SUMS](https://github.com/123oqwe/dsh-workflow/releases/download/v0.1.5-dsh.0.2.1-rc.2/SHA256SUMS).
 
 ### 2. Try this first
 
@@ -110,11 +110,11 @@ pnpm build
 | --- | --- |
 | Install, update or remove | [Installation guide](docs/install_EN.md) |
 | Learn the features and limits | [Documentation](docs/workflow.md) |
-| Read release changes | [Releases](https://github.com/gulagala001/dsh-workflow/releases) |
-| Report a problem | [Issues](https://github.com/gulagala001/dsh-workflow/issues) |
+| Read release changes | [Releases](https://github.com/123oqwe/dsh-workflow/releases) |
+| Report a problem | [Issues](https://github.com/123oqwe/dsh-workflow/issues) |
 
 For a bug report, include the full DSH and plugin versions, the entry point, minimal reproduction steps, and expected versus actual behavior. Remove private data before sharing logs or screenshots.
 
-<p align="center"><a href="#readme-top">Back to top</a> · <a href="https://github.com/gulagala001/dsh-workflow/releases">Versions and downloads</a> · <a href="https://github.com/gulagala001/dsh-workflow/issues">Feedback</a></p>
+<p align="center"><a href="#readme-top">Back to top</a> · <a href="https://github.com/123oqwe/dsh-workflow/releases">Versions and downloads</a> · <a href="https://github.com/123oqwe/dsh-workflow/issues">Feedback</a></p>
 
 [Documentation structure and contributing](docs/documentation.md)
