@@ -12,6 +12,8 @@
       name: dsh-workflow-plus/engine
     - id: dsh-workflow-tool
       name: dsh-workflow-plus/tool
+    - id: dsh-workflow-commands
+      name: dsh-workflow-plus/commands
 
 - id: preset-standard
   name: '@deepseek-ai/dsh-agent-preset'
