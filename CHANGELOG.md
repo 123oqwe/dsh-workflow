@@ -1,3 +1,8 @@
+# DSH Workflow 0.1.6 · DSH 0.2.1-rc.2
+
+- Replace the PTC preset too, so PTC mode uses the plugin workflow engine/tool without native shadowing.
+- Canonicalize test fixture paths so the local worktree tests pass outside GitHub Actions.
+
 # DSH Workflow 0.1.5 · DSH 0.2.1-rc.2
 
 - Ship a Standard preset replacement so the plugin workflow tool is visible after install, without manually editing `preset-standard`.
