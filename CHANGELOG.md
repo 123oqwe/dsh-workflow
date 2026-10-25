@@ -1,3 +1,7 @@
+# DSH Workflow 0.1.9 · DSH 0.2.1-rc.2
+
+- Add a `Stop workflow` button to the client workflow header popover; it sends `/workflows stop <runId>` through the session command API.
+
 # DSH Workflow 0.1.8 · DSH 0.2.1-rc.2
 
 - Register live workflow runs in an in-process `workflowRuns` service.
