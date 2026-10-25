@@ -230,6 +230,19 @@ export class PtcWorkflowRun implements WorkflowRun {
   }
 
   /**
+   * Stop one live child while leaving the rest of the run alive.
+   * @param seq - One-based child sequence from the workflow journal.
+   * @returns true when a live child was found.
+   */
+  cancelAgent(seq: number): boolean {
+    const record = this.children.get(seq)
+    if (record === undefined) return false
+    this.failures.set(seq, { seq, childId: record.run.childId, stopReason: 'cancelled', cause: 'cancelled', reason: 'agent stopped via /workflows' })
+    void this.disposeChild(record)
+    return true
+  }
+
+  /**
    * Cancel unfinished work and await the program and child cleanup.
    * @returns One shared completion promise for repeated disposal calls.
    */

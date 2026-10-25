@@ -8,6 +8,8 @@
       name: dsh-workflow-plus
     - id: dsh-workflow-spawn
       name: dsh-workflow-plus/spawn
+    - id: dsh-workflow-runs
+      name: dsh-workflow-plus/runs
     - id: dsh-workflow-engine
       name: dsh-workflow-plus/engine
     - id: dsh-workflow-tool

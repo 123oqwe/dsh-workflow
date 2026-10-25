@@ -3,16 +3,18 @@ import { mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 export const name = 'dsh-workflow-commands'
-export const inject = ['commands', 'dshWorkflow']
+export const inject = ['commands', 'dshWorkflow', 'workflowRuns']
 
 const RUN_ID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i
 const HELP = [
-  'Usage: /workflows [list|show <runId>|resume <runId>|save <name>]',
+  'Usage: /workflows [list|show <runId>|resume <runId>|save <name>|stop <runId>|stop-agent <runId> <seq>]',
   '',
   '  list            List workflow runs for this session',
   '  show <runId>    Show the archived script, meta and status',
   '  resume <runId>  Resume the archived script in this session',
   '  save <name>     Save the run script to .omd/workflows/<name>.js',
+  '  stop <runId>    Stop a live run',
+  '  stop-agent <runId> <seq>  Stop one live agent',
 ].join('\n')
 const SAVED_NAME = /^[a-z0-9][a-z0-9_-]{0,95}$/
 
@@ -23,6 +25,8 @@ export function parseCommand(rawInput = '') {
   if ((verb === 'show' || verb === 'resume') && parts.length === 2 && parts[1].length > 0) {
     return { verb, id: parts[1] }
   }
+  if (verb === 'stop' && parts.length === 2 && parts[1].length > 0) return { verb: 'stop', id: parts[1] }
+  if (verb === 'stop-agent' && parts.length === 3 && parts[1].length > 0 && /^[1-9][0-9]*$/.test(parts[2])) return { verb: 'stop-agent', id: parts[1], seq: Number(parts[2]) }
   if (verb === 'save' && parts.length === 2 && SAVED_NAME.test(parts[1])) return { verb: 'save', name: parts[1] }
   if (verb === 'save' && parts.length === 3 && RUN_ID.test(parts[1]) && SAVED_NAME.test(parts[2])) return { verb: 'save', id: parts[1], name: parts[2] }
   return { verb: 'help' }
@@ -155,7 +159,7 @@ export function apply(ctx) {
   const definition = name => ({
     name,
     description: 'List, inspect, resume or save workflow runs in this session',
-    input: { hint: '[list|show <runId>|resume <runId>|save <name>]' },
+    input: { hint: '[list|show <runId>|resume <runId>|save <name>|stop <runId>|stop-agent <runId> <seq>]' },
     async handler(invocation) {
       const command = parseCommand(invocation.rawInput)
       try {
@@ -163,6 +167,18 @@ export function apply(ctx) {
         if (command.verb === 'show') return { kind: 'success', text: await showRun(ctx, invocation.agent.session.id, command.id) }
         if (command.verb === 'resume') return { kind: 'success', text: await resumeRun(ctx, invocation, command.id) }
         if (command.verb === 'save') return { kind: 'success', text: await saveRun(ctx, invocation, command.id, command.name) }
+        if (command.verb === 'stop-agent') {
+          const stopped = ctx.workflowRuns?.stopAgent?.(command.id, command.seq) === true
+          return stopped
+            ? { kind: 'success', text: `Stopped agent ${command.seq} of workflow ${command.id}.` }
+            : { kind: 'error', text: `No live agent ${command.seq} for workflow ${command.id}.` }
+        }
+        if (command.verb === 'stop') {
+          const stopped = ctx.workflowRuns?.stop?.(command.id) === true
+          return stopped
+            ? { kind: 'success', text: `Stopped workflow ${command.id}.` }
+            : { kind: 'error', text: `No live workflow run ${command.id}.` }
+        }
         return { kind: 'error', text: HELP }
       } catch (error) {
         return { kind: 'error', text: `${name}: ${error instanceof Error ? error.message : String(error)}` }

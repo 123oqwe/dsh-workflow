@@ -1,3 +1,9 @@
+# DSH Workflow 0.1.8 · DSH 0.2.1-rc.2
+
+- Register live workflow runs in an in-process `workflowRuns` service.
+- Add `/workflows stop <runId>` and `/workflows stop-agent <runId> <seq>`.
+- Keep `stop`/`stop-agent` routed through the engine's cancellation and child disposal paths.
+
 # DSH Workflow 0.1.7 · DSH 0.2.1-rc.2
 
 - Add `/ultracode on|off|status`: a session-scoped workflow-first policy section, persisted in `$DSH_HOME/dsh-workflow/ultracode/sessions.json`.
