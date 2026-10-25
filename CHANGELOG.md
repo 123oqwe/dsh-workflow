@@ -1,3 +1,8 @@
+# DSH Workflow 0.1.7 · DSH 0.2.1-rc.2
+
+- Add `/ultracode on|off|status`: a session-scoped workflow-first policy section, persisted in `$DSH_HOME/dsh-workflow/ultracode/sessions.json`.
+- Add `/workflows` as an alias of `/workflow`, plus `save <name>` / `save <runId> <name>` to write the archived script into `.omd/workflows/`.
+
 # DSH Workflow 0.1.6 · DSH 0.2.1-rc.2
 
 - Replace the PTC preset too, so PTC mode uses the plugin workflow engine/tool without native shadowing.

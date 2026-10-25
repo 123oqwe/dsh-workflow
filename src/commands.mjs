@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto'
-import { readFile, readdir } from 'node:fs/promises'
+import { mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 export const name = 'dsh-workflow-commands'
@@ -7,20 +7,24 @@ export const inject = ['commands', 'dshWorkflow']
 
 const RUN_ID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i
 const HELP = [
-  'Usage: /workflow [list|show <runId>|resume <runId>]',
+  'Usage: /workflows [list|show <runId>|resume <runId>|save <name>]',
   '',
   '  list            List workflow runs for this session',
   '  show <runId>    Show the archived script, meta and status',
   '  resume <runId>  Resume the archived script in this session',
+  '  save <name>     Save the run script to .omd/workflows/<name>.js',
 ].join('\n')
+const SAVED_NAME = /^[a-z0-9][a-z0-9_-]{0,95}$/
 
 export function parseCommand(rawInput = '') {
   const parts = String(rawInput).trim().split(/\s+/).filter(Boolean)
   const verb = parts[0]?.toLowerCase() ?? 'list'
-  if (verb === 'list') return { verb: 'list' }
+  if (verb === 'list' || verb === 'runs') return { verb: 'list' }
   if ((verb === 'show' || verb === 'resume') && parts.length === 2 && parts[1].length > 0) {
     return { verb, id: parts[1] }
   }
+  if (verb === 'save' && parts.length === 2 && SAVED_NAME.test(parts[1])) return { verb: 'save', name: parts[1] }
+  if (verb === 'save' && parts.length === 3 && RUN_ID.test(parts[1]) && SAVED_NAME.test(parts[2])) return { verb: 'save', id: parts[1], name: parts[2] }
   return { verb: 'help' }
 }
 
@@ -80,12 +84,13 @@ async function listRuns(ctx, sessionId, limit = 20) {
     const dir = join(directory, name)
     try {
       const record = await readJson(join(dir, 'run.json'))
-      runs.push({ id: record.id, name: record.meta?.name ?? 'workflow', status: await readStatus(dir), dir })
+      const info = await stat(join(dir, 'run.json'))
+      runs.push({ id: record.id, name: record.meta?.name ?? 'workflow', status: await readStatus(dir), dir, mtime: info.mtimeMs })
     } catch {
       // A torn or foreign directory is not a run; skip it rather than failing the list.
     }
   }
-  return runs.slice(0, limit)
+  return runs.sort((a, b) => b.mtime - a.mtime).slice(0, limit)
 }
 
 async function findRun(ctx, sessionId, id) {
@@ -132,21 +137,38 @@ async function resumeRun(ctx, invocation, id) {
   }
 }
 
+async function saveRun(ctx, invocation, id, name) {
+  const cwd = invocation.agent?.session?.header?.cwd
+  if (typeof cwd !== 'string' || cwd.length === 0) throw new Error('cannot save without a workspace cwd')
+  const sessionId = invocation.agent.session.id
+  const target = id === undefined ? (await listRuns(ctx, sessionId, 1))[0] : undefined
+  const record = id === undefined ? (target === undefined ? undefined : (await findRun(ctx, sessionId, target.id)).record) : (await findRun(ctx, sessionId, id)).record
+  if (record === undefined) throw new Error('no workflow run to save')
+  const directory = join(cwd, '.omd', 'workflows')
+  await mkdir(directory, { recursive: true, mode: 0o700 })
+  const path = join(directory, name + '.js')
+  await writeFile(path, record.script, { flag: 'wx', mode: 0o600 })
+  return `Saved workflow "${name}" to ${path}`
+}
+
 export function apply(ctx) {
-  ctx.commands.register({
-    name: 'workflow',
-    description: 'List, inspect or resume workflow runs in this session',
-    input: { hint: '[list|show <runId>|resume <runId>]' },
+  const definition = name => ({
+    name,
+    description: 'List, inspect, resume or save workflow runs in this session',
+    input: { hint: '[list|show <runId>|resume <runId>|save <name>]' },
     async handler(invocation) {
       const command = parseCommand(invocation.rawInput)
       try {
         if (command.verb === 'list') return { kind: 'success', text: formatRuns(await listRuns(ctx, invocation.agent.session.id)) }
         if (command.verb === 'show') return { kind: 'success', text: await showRun(ctx, invocation.agent.session.id, command.id) }
         if (command.verb === 'resume') return { kind: 'success', text: await resumeRun(ctx, invocation, command.id) }
+        if (command.verb === 'save') return { kind: 'success', text: await saveRun(ctx, invocation, command.id, command.name) }
         return { kind: 'error', text: HELP }
       } catch (error) {
-        return { kind: 'error', text: `workflow: ${error instanceof Error ? error.message : String(error)}` }
+        return { kind: 'error', text: `${name}: ${error instanceof Error ? error.message : String(error)}` }
       }
     },
   })
+  ctx.commands.register(definition('workflow'))
+  ctx.commands.register(definition('workflows'))
 }
