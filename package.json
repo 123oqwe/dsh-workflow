@@ -13,7 +13,8 @@
     "./client": "./lib/client.js",
     "./package.json": "./package.json",
     "./commands": "./src/commands.mjs",
-    "./ultracode": "./src/ultracode.mjs"
+    "./ultracode": "./src/ultracode.mjs",
+    "./runs": "./src/run-registry.mjs"
   },
   "repository": {
     "type": "git",

@@ -228,6 +228,9 @@ class PtcWorkflowEngine extends WorkflowEngine {
     )
 
     this.emitWorkflowEvent('workflow/start', info)
+    // A host may expose a live registry so /workflows can stop an in-flight run.
+    const registry = runCtx.get('workflowRuns') as { register?: (value: typeof run) => unknown } | undefined
+    registry?.register?.(run)
     // `workflow/end` fires as the (never-rejecting) result settles, with the
     // outcome DATA only — the value stays with the run's holder.
     void run.result.then((settled) => {
