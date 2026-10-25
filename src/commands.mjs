@@ -3,7 +3,7 @@ import { mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 export const name = 'dsh-workflow-commands'
-export const inject = ['commands', 'dshWorkflow']
+export const inject = ['commands', 'dshWorkflow', 'workflowRuns']
 
 const RUN_ID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i
 const HELP = [

@@ -23,7 +23,7 @@
     "workflow-ptc/src/guest.ts": "e136f6b3497a5eeb76ec63d54c9f6b83446a034582b69e151234340c5ce269f3",
     "workflow-ptc/src/host.ts": "761e3dcc80cca34676040ab94641b8895150e8f9eaf691947d95b0e5475e3614",
     "workflow-ptc/src/hub.ts": "39094cdef2eff8be35fd3ca919334564e870b505d35c7c7b86f21f43eff5f8a3",
-    "workflow-ptc/src/index.ts": "70c38803d27b2c193031eb4abc56ffe9edae66894d436a65ac5e6cef7120cda6",
+    "workflow-ptc/src/index.ts": "b7ca7b16d833fecb98c239f9a2aaab39e0b611c3b13702848d7782c0682a08e1",
     "workflow-ptc/src/journal.ts": "d12f7559c118afdbf7f1f4f89a4d8d2d54219faf25fdf4ed6b206e01600dcaf7",
     "workflow-ptc/src/meta.ts": "dd1cb161f3d74d23f9564984ababf4dff66adbd62780cb649ef088aac2d385cb",
     "workflow-ptc/src/realm.ts": "0d2ea39c0588c5c6ef44d20ee861e8a9105be40c510c1072342ac4e0609b73d7",

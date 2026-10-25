@@ -37,10 +37,13 @@ export class RunRegistry {
 export const name = 'dsh-workflow-runs'
 export const inject = ['dshWorkflow']
 
+const SHARED = Symbol.for('dsh.workflow.runs')
+const shared = globalThis[SHARED] ??= new RunRegistry()
+
 export class WorkflowRuns extends Service {
   constructor(ctx) {
     super(ctx, 'workflowRuns')
-    this.registry = new RunRegistry()
+    this.registry = shared
   }
 
   list() { return this.registry.list() }
