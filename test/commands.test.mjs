@@ -34,11 +34,11 @@ test('the command lists the current session store and resumes by archived script
   await mkdir(dir, { recursive: true })
   await writeFile(join(dir, 'run.json'), JSON.stringify({ version: 1, id: runId, sessionId, script: 'export const meta = { name: "x" }; return 1', meta: { name: 'x' } }) + '\n')
   await writeFile(join(dir, 'journal.jsonl'), JSON.stringify({ type: 'end', outcome: { stopReason: 'completed' } }) + '\n')
-  let definition
+  const definitions = []
   const calls = []
   const ctx = {
     dshWorkflow: { store: { dir: root } },
-    commands: { register(value) { definition = value } },
+    commands: { register(value) { definitions.push(value) } },
     workflowEngine: {
       start(request) {
         calls.push(request)
@@ -47,6 +47,7 @@ test('the command lists the current session store and resumes by archived script
     },
   }
   apply(ctx)
+  const definition = definitions.find(value => value.name === 'workflow')
   assert.equal(definition.name, 'workflow')
   const list = await definition.handler({ rawInput: 'list', agent: { session: { id: sessionId } } })
   assert.equal(list.kind, 'success')
