@@ -45,12 +45,26 @@ function WorkflowProgress({ ctx, ...props }) {
     </Button>
     {open && createPortal(<div ref={panel} id={id} tabIndex={-1} role="dialog" aria-label="Workflow 阶段与子代理" className="omd-workflow-popover"
       style={position ?? { visibility: 'hidden', left: 0, top: 0 }}>
-      {(current.data.status === 'running' || current.data.status === 'interrupted') && <div className="omd-workflow-actions">
+      <div className="omd-workflow-actions">
+        {(current.data.status === 'running' || current.data.status === 'interrupted') && <>
+          <Button size="sm" variant="ghost" type="button" onClick={() => {
+            const session = ctx.sessions.binding(sessionId)?.session
+            if (session !== undefined) void session.command(`/workflows stop ${current.id}`)
+          }}>Stop workflow</Button>
+          <Button size="sm" variant="ghost" type="button" onClick={() => {
+            const session = ctx.sessions.binding(sessionId)?.session
+            if (session !== undefined) void session.command(`/workflows pause ${current.id}`)
+          }}>Pause</Button>
+          <Button size="sm" variant="ghost" type="button" onClick={() => {
+            const session = ctx.sessions.binding(sessionId)?.session
+            if (session !== undefined) void session.command(`/workflows resume ${current.id}`)
+          }}>Resume</Button>
+        </>}
         <Button size="sm" variant="ghost" type="button" onClick={() => {
           const session = ctx.sessions.binding(sessionId)?.session
-          if (session !== undefined) void session.command(`/workflows stop ${current.id}`)
-        }}>Stop workflow</Button>
-      </div>}
+          if (session !== undefined) void session.command(`/workflows restart ${current.id}`)
+        }}>Restart</Button>
+      </div>
       {workflows.map(node => renderPanel({ ...props, node, key: node.id }))}
     </div>, document.body)}
   </>;

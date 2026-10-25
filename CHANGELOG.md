@@ -1,3 +1,9 @@
+# DSH Workflow 0.1.10 · DSH 0.2.1-rc.2
+
+- Pause/resume new agent dispatch in the engine; `/workflows pause <runId>` and `/workflows resume <runId>` (live) are routed through the registry.
+- `/workflows restart <runId>` replays the archived script from its successful prefix.
+- Client header controls now include Pause, Resume and Restart next to Stop workflow.
+
 # DSH Workflow 0.1.9 · DSH 0.2.1-rc.2
 
 - Add a `Stop workflow` button to the client workflow header popover; it sends `/workflows stop <runId>` through the session command API.
