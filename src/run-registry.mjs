@@ -32,6 +32,20 @@ export class RunRegistry {
     if (entry === undefined || typeof entry.run.cancelAgent !== 'function') return false
     return entry.run.cancelAgent(seq) === true
   }
+
+  pause(id) {
+    const entry = this.runs.get(id)
+    if (entry === undefined || typeof entry.run.pause !== 'function') return false
+    entry.run.pause()
+    return true
+  }
+
+  resume(id) {
+    const entry = this.runs.get(id)
+    if (entry === undefined || typeof entry.run.resume !== 'function') return false
+    entry.run.resume()
+    return true
+  }
 }
 
 export const name = 'dsh-workflow-runs'
@@ -51,6 +65,10 @@ export class WorkflowRuns extends Service {
   stop(id, reason) { return this.registry.stop(id, reason) }
 
   stopAgent(id, seq) { return this.registry.stopAgent(id, seq) }
+
+  pause(id) { return this.registry.pause(id) }
+
+  resume(id) { return this.registry.resume(id) }
 }
 
 export function apply(ctx) {

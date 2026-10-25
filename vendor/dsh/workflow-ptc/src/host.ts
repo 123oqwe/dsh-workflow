@@ -180,6 +180,9 @@ export class PtcWorkflowRun implements WorkflowRun {
   private readonly liveAgents = new Map<number, WorkflowAgentInfo>()
   private started = 0
   private terminal = false
+  private paused = false
+  private pauseGate: Promise<void> | undefined
+  private releasePause: (() => void) | undefined
   private cancelReason: string | undefined
   private disposed: Promise<void> | undefined
   private readonly externalAbort: () => void
@@ -225,8 +228,36 @@ export class PtcWorkflowRun implements WorkflowRun {
   cancel(reason = 'workflow cancelled'): void {
     if (this.terminal || this.cancelReason !== undefined) return
     this.cancelReason = reason
+    this.resume()
     this.controller.abort(reason)
     for (const record of this.children.values()) void this.disposeChild(record)
+  }
+
+  /** Pause new child dispatch; already-running children continue. */
+  pause(): void {
+    if (this.terminal || this.paused) return
+    this.paused = true
+    this.pauseGate = new Promise<void>(resolve => { this.releasePause = resolve })
+  }
+
+  /** Release paused child dispatch. */
+  resume(): void {
+    this.paused = false
+    this.releasePause?.()
+    this.releasePause = undefined
+    this.pauseGate = undefined
+  }
+
+  private async waitWhilePaused(): Promise<void> {
+    if (!this.paused) return
+    const signal = this.controller.signal
+    signal.throwIfAborted()
+    await new Promise<void>((resolve, reject) => {
+      const onAbort = (): void => { cleanup(); reject(signal.reason) }
+      const cleanup = (): void => { signal.removeEventListener('abort', onAbort) }
+      signal.addEventListener('abort', onAbort, { once: true })
+      this.pauseGate?.then(() => { cleanup(); if (signal.aborted) reject(signal.reason); else resolve() }, error => { cleanup(); reject(error) })
+    })
   }
 
   /**
@@ -299,6 +330,8 @@ export class PtcWorkflowRun implements WorkflowRun {
   }
 
   private async startChild(request: ChildStartRequest): Promise<PtcJsonValue> {
+    this.requireActive()
+    await this.waitWhilePaused()
     this.requireActive()
     if (request.seq !== this.started + 1 || this.started >= this.init.limits.maxTotalAgents) throw new Error('Invalid workflow child order or total-agent cap exceeded')
     const callId = ++this.started
