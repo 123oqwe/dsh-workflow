@@ -45,6 +45,12 @@ function WorkflowProgress({ ctx, ...props }) {
     </Button>
     {open && createPortal(<div ref={panel} id={id} tabIndex={-1} role="dialog" aria-label="Workflow 阶段与子代理" className="omd-workflow-popover"
       style={position ?? { visibility: 'hidden', left: 0, top: 0 }}>
+      {(current.data.status === 'running' || current.data.status === 'interrupted') && <div className="omd-workflow-actions">
+        <Button size="sm" variant="ghost" type="button" onClick={() => {
+          const session = ctx.sessions.binding(sessionId)?.session
+          if (session !== undefined) void session.command(`/workflows stop ${current.id}`)
+        }}>Stop workflow</Button>
+      </div>}
       {workflows.map(node => renderPanel({ ...props, node, key: node.id }))}
     </div>, document.body)}
   </>;
